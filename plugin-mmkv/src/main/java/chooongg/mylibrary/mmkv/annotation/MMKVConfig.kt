@@ -6,7 +6,7 @@ import com.tencent.mmkv.MMKV
 /**
  * 实例对象配置信息
  */
-@Target(AnnotationTarget.TYPE)
+@Target(AnnotationTarget.CLASS)
 annotation class MMKVConfig(
 
     /**
