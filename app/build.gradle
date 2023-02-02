@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.chooongg.libandroid'
+    namespace 'com.chooongg.libAndroid'
     compileSdk sdkConfig.compileSdk
 
     defaultConfig {

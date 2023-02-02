@@ -16,3 +16,4 @@ rootProject.name = "LibAndroid"
 include ':app'
 include ':core'
 include ':plugin-mmkv'
+include ':basic'

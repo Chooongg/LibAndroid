@@ -4,9 +4,8 @@ plugins {
 }
 
 android {
-    namespace 'chooongg.mylibrary.mmkv'
+    namespace 'chooongg.libAndroid.mmkv'
     compileSdk sdkConfig.compileSdk
-
     defaultConfig {
         minSdk sdkConfig.minSdk
         targetSdk sdkConfig.targetSdk
@@ -28,7 +27,6 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':basic')
     api 'com.tencent:mmkv:1.2.14'
-    implementation "androidx.startup:startup-runtime:1.2.0-alpha02"
-    implementation 'androidx.annotation:annotation:1.6.0-beta01'
 }

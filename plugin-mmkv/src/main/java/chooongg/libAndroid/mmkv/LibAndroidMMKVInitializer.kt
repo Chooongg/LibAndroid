@@ -1,11 +1,11 @@
-package chooongg.mylibrary.mmkv
+package chooongg.libAndroid.mmkv
 
 import android.content.Context
 import androidx.startup.Initializer
 import com.tencent.mmkv.MMKV
 
 @Suppress("unused")
-class MMKVInitializer : Initializer<String> {
+class LibAndroidMMKVInitializer : Initializer<String> {
     override fun create(context: Context): String {
         return MMKV.initialize(context)
     }

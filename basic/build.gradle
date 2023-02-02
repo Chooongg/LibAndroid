@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'chooongg.libAndroid.core'
+    namespace 'chooongg.libAndroid.basic'
     compileSdk sdkConfig.compileSdk
     defaultConfig {
         minSdk sdkConfig.minSdk
@@ -15,7 +15,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
     compileOptions {
@@ -28,10 +28,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':basic')
-    implementation project(path: ':plugin-mmkv')
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
-    implementation 'com.google.android.material:material:1.9.0-alpha01'
-    // 调试工具
-    implementation 'com.facebook.stetho:stetho:1.6.0'
+    api 'androidx.startup:startup-runtime:1.2.0-alpha02'
 }

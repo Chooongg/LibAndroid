@@ -1,4 +1,4 @@
-package chooongg.mylibrary.core.delegate
+package chooongg.libAndroid.core.delegate
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
