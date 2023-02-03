@@ -1,5 +1,6 @@
 package chooongg.libAndroid.mmkv
 
+import chooongg.libAndroid.basic.ext.getTClass
 import com.tencent.mmkv.MMKV
 
 open class MMKVKey<T>(
@@ -8,6 +9,7 @@ open class MMKVKey<T>(
     val defaultValue: T
 ) {
 
+    @Suppress("UNCHECKED_CAST", "KotlinConstantConditions")
     open fun get(default: T = defaultValue): T {
         if (mmkv == null) return default
         return if (mmkv.containsKey(key)) {

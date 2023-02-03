@@ -2,7 +2,7 @@ package chooongg.libAndroid.simple
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.chooongg.libandroid.R
+import com.chooongg.libAndroid.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
