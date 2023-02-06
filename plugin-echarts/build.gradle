@@ -1,18 +1,15 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'com.chooongg.libAndroid'
+    namespace 'chooongg.libAndroid.echarts'
     compileSdk sdkConfig.compileSdk
-
     defaultConfig {
-        applicationId "chooongg.libandroid.simple"
         minSdk sdkConfig.minSdk
         targetSdk sdkConfig.targetSdk
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -28,11 +25,8 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    buildFeatures { viewBinding true }
 }
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
-    implementation "com.google.android.material:material:$dependenciesVersion.materialVersion"
-    implementation project(path: ':core')
 }

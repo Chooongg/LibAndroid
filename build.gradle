@@ -12,4 +12,9 @@ ext {
             minSdk    : 21,
             targetSdk : 33,
     ]
+    dependenciesVersion = [
+            appcompatVersion  : '1.6.0',
+            materialVersion   : '1.8.0',
+            lifecycleVersion  : '2.5.1',
+    ]
 }

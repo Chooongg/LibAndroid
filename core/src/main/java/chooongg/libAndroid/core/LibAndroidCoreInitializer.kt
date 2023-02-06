@@ -2,7 +2,7 @@ package chooongg.libAndroid.core
 
 import android.content.Context
 import androidx.startup.Initializer
-import chooongg.libAndroid.mmkv.LibAndroidMMKVInitializer
+import chooongg.libAndroid.basic.LibAndroidBasicInitializer
 import com.facebook.stetho.Stetho
 
 @Suppress("unused")
@@ -13,5 +13,5 @@ class LibAndroidCoreInitializer : Initializer<String> {
     }
 
     override fun dependencies(): MutableList<Class<out Initializer<*>>> =
-        mutableListOf(LibAndroidMMKVInitializer::class.java)
+        mutableListOf(LibAndroidBasicInitializer::class.java)
 }

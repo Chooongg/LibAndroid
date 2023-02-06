@@ -25,13 +25,13 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+    buildFeatures { viewBinding true }
 }
 
 dependencies {
-    implementation project(path: ':basic')
-    implementation project(path: ':plugin-mmkv')
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
-    implementation 'com.google.android.material:material:1.9.0-alpha01'
+    implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
+    implementation "com.google.android.material:material:$dependenciesVersion.materialVersion"
+    api project(path: ':basic')
     // 调试工具
     implementation 'com.facebook.stetho:stetho:1.6.0'
 }
