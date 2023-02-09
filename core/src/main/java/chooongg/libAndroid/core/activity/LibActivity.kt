@@ -2,9 +2,11 @@ package chooongg.libAndroid.core.activity
 
 import android.content.Context
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import chooongg.libAndroid.basic.ext.attrBoolean
+import chooongg.libAndroid.basic.ext.logDClass
 import chooongg.libAndroid.core.annotation.EdgeToEdge
 import chooongg.libAndroid.core.annotation.Title
 
@@ -13,24 +15,57 @@ abstract class LibActivity : AppCompatActivity() {
     inline val context: Context get() = this
     inline val activity: LibActivity get() = this
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    @LayoutRes
+    protected abstract fun initLayout(): Int
+
+    protected open fun initView(savedInstanceState: Bundle?) {}
+
+    protected open fun initContent(savedInstanceState: Bundle?) {}
+
+    final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initEdgeToEdge()
-        initTitle()
+        onCreateTitle()
+        onCreateEdgeToEdge()
+
+        onCreateTopAppBar()
+        onCreateContentView()
+        initView(savedInstanceState)
+        logDClass("Activity", javaClass, "---------- $title ---------- onCreate")
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        initContent(savedInstanceState)
+    }
 
-    protected open fun initTitle() {
+    protected open fun onCreateContentView() {
+        setContentView(initLayout())
+    }
+
+    private fun onCreateTitle() {
         if (javaClass.isAnnotationPresent(Title::class.java)) {
             title = javaClass.getAnnotation(Title::class.java)!!.value
         }
     }
 
-    protected open fun initEdgeToEdge() {
+    private fun onCreateEdgeToEdge() {
         if (attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) return
         javaClass.getAnnotation(EdgeToEdge::class.java)?.let {
             if (!it.isEdgeToEdge) return
             WindowCompat.setDecorFitsSystemWindows(window, false)
         }
+    }
+
+    protected open fun onCreateTopAppBar() {
+        if (attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) return
+    }
+
+    protected open fun onCreateNavigation() {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        logDClass("Activity", javaClass, "---------- $title ---------- onDestroy")
     }
 }

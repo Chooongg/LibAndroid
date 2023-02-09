@@ -1,22 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Theme -->
+
     <style name="Base.Theme.LibAndroid" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:actionBarSize">@dimen/lib_action_bar_size</item>
         <item name="actionBarSize">@dimen/lib_action_bar_size</item>
         <item name="android:colorBackground">?colorSurface</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:actionBarStyle">?toolbarStyle</item>
 
+        <item name="snackbarStyle">@style/Widget.LibAndroid.Snackbar</item>
         <item name="materialDividerHeavyStyle">@style/Widget.LibAndroid.MaterialDivider.Heavy</item>
+        <item name="materialAlertDialogTheme">
+            @style/ThemeOverlay.Material3.MaterialAlertDialog.Centered.FullWidthButtons
+        </item>
 
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
         </item>
     </style>
 
+    <style name="Theme.LibAndroid.Surface" parent="Base.Theme.LibAndroid">
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:actionBarStyle">@style/Widget.LibAndroid.TopAppBar.Surface</item>
+        <item name="appBarLayoutStyle">@style/Widget.LibAndroid.AppBarLayout.Surface</item>
+        <item name="toolbarStyle">@style/Widget.LibAndroid.TopAppBar.OnSurface</item>
+        <item name="android:toolbarStyle">@style/Widget.LibAndroid.TopAppBar.OnSurface</item>
+        <item name="toolbarNavigationButtonStyle">
+            @style/Widget.LibAndroid.TopAppBar.Navigation.Surface
+        </item>
+    </style>
+
+    <style name="Theme.LibAndroid.Primary" parent="Base.Theme.LibAndroid">
+        <item name="android:statusBarColor">?colorPrimary</item>
+        <item name="android:actionBarStyle">@style/Widget.LibAndroid.TopAppBar.Primary</item>
+        <item name="appBarLayoutStyle">@style/Widget.LibAndroid.AppBarLayout.Primary</item>
+        <item name="collapsingToolbarLayoutStyle">
+            @style/Widget.LibAndroid.CollapsingToolbar.Primary
+        </item>
+        <item name="collapsingToolbarLayoutMediumStyle">
+            @style/Widget.LibAndroid.CollapsingToolbar.Primary
+        </item>
+        <item name="collapsingToolbarLayoutLargeStyle">
+            @style/Widget.LibAndroid.CollapsingToolbar.Primary
+        </item>
+        <item name="toolbarStyle">@style/Widget.LibAndroid.TopAppBar.OnPrimary</item>
+        <item name="android:toolbarStyle">@style/Widget.LibAndroid.TopAppBar.OnPrimary</item>
+        <item name="toolbarNavigationButtonStyle">
+            @style/Widget.LibAndroid.TopAppBar.Navigation.Primary
+        </item>
+    </style>
+
+    <style name="Theme.LibAndroid.primarySurface" parent="Theme.LibAndroid.Primary" />
+
+    <!-- Other -->
+
     <style name="Widget.LibAndroid.MaterialDivider.Heavy" parent="Widget.Material3.MaterialDivider.Heavy">
         <item name="dividerThickness">@dimen/dividerHeavy</item>
+    </style>
+
+    <style name="Widget.LibAndroid.Snackbar" parent="Base.Widget.Material3.Snackbar">
+        <item name="animationMode">fade</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginBottom">@dimen/contentLarge</item>
+        <item name="android:layout_marginEnd">@dimen/contentSmall</item>
+        <item name="android:layout_marginStart">@dimen/contentSmall</item>
+        <item name="android:layout_marginTop">@dimen/contentSmall</item>
+        <item name="shapeAppearance">?attr/shapeAppearanceCornerExtraSmall</item>
     </style>
 
 </resources>

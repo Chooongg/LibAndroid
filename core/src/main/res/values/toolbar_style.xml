@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TopAppBar -->
+
+    <style name="Widget.LibAndroid.TopAppBar.Surface" parent="Widget.Material3.Toolbar.Surface">
+        <item name="android:elevation">0dp</item>
+        <item name="android:minHeight">?android:attr/actionBarSize</item>
+        <item name="maxButtonHeight">?android:attr/actionBarSize</item>
+        <item name="contentInsetStartWithNavigation">56dp</item>
+        <item name="contentInsetStart">@dimen/contentMedium</item>
+        <item name="contentInsetEnd">@dimen/contentMedium</item>
+        <item name="titleMargin">0dp</item>
+    </style>
+
+    <style name="Widget.LibAndroid.TopAppBar.OnSurface" parent="Widget.Material3.Toolbar.OnSurface">
+        <item name="android:elevation">0dp</item>
+        <item name="android:minHeight">?android:attr/actionBarSize</item>
+        <item name="maxButtonHeight">?android:attr/actionBarSize</item>
+        <item name="contentInsetStartWithNavigation">56dp</item>
+        <item name="contentInsetStart">@dimen/contentMedium</item>
+        <item name="contentInsetEnd">@dimen/contentMedium</item>
+        <item name="titleMargin">0dp</item>
+        <item name="titleMarginStart">16dp</item>
+        <item name="titleMarginEnd">16dp</item>
+    </style>
+
+    <style name="Widget.LibAndroid.TopAppBar.Primary" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:minHeight">?android:attr/actionBarSize</item>
+        <item name="maxButtonHeight">?android:attr/actionBarSize</item>
+        <item name="contentInsetStartWithNavigation">56dp</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+        <item name="titleMargin">0dp</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Material3.Toolbar.Primary</item>
+    </style>
+
+    <style name="Widget.LibAndroid.TopAppBar.OnPrimary" parent="Widget.LibAndroid.TopAppBar.Primary">
+        <item name="android:background">@null</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <style name="Widget.LibAndroid.TopAppBar.PrimarySurface" parent="Widget.LibAndroid.TopAppBar.Primary" />
+
+    <style name="Widget.LibAndroid.TopAppBar.OnPrimarySurface" parent="Widget.LibAndroid.TopAppBar.OnPrimary" />
+
+    <style name="Widget.LibAndroid.TopAppBar.Navigation.Surface" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">?attr/colorOnSurface</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="Widget.LibAndroid.TopAppBar.Navigation.Primary" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">?attr/colorOnPrimary</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="Widget.LibAndroid.TopAppBar.Navigation.PrimarySurface" parent="Widget.LibAndroid.TopAppBar.Navigation.Primary" />
+
+    <!-- AppBarLayout -->
+
+    <style name="Widget.LibAndroid.AppBarLayout.Surface" parent="Widget.Material3.AppBarLayout">
+        <item name="layout_behavior">com.chooongg.core.widget.behavior.AppBarLayoutBehavior</item>
+    </style>
+
+    <style name="Widget.LibAndroid.AppBarLayout.Primary" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="layout_behavior">com.chooongg.core.widget.behavior.AppBarLayoutBehavior</item>
+    </style>
+
+    <style name="Widget.LibAndroid.AppBarLayout.PrimarySurface" parent="Widget.LibAndroid.AppBarLayout.Primary" />
+
+    <!-- CollapsingToolbar -->
+
+    <style name="Widget.LibAndroid.CollapsingToolbar.Primary" parent="Widget.Material3.CollapsingToolbar">
+        <item name="collapsedTitleTextColor">?colorOnPrimary</item>
+        <item name="expandedTitleTextColor">?colorOnPrimary</item>
+        <item name="titleCollapseMode">scale</item>
+        <item name="statusBarScrim">?attr/colorPrimaryDark</item>
+        <item name="expandedTitleTextAppearance">?attr/textAppearanceHeadlineLarge</item>
+    </style>
+
+    <!-- Overlay -->
+
+    <style name="ThemeOverlay.Material3.Toolbar.Primary" parent="">
+        <item name="actionMenuTextColor">?attr/colorOnPrimary</item>
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+    </style>
+
+</resources>

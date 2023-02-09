@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.LibAndroid.Surface" parent="Base.Theme.LibAndroid">
+        <item name="android:actionBarStyle">@style/Widget.LibAndroid.TopAppBar.Surface</item>
+        <item name="appBarLayoutStyle">@style/Widget.LibAndroid.AppBarLayout.Surface</item>
+        <item name="toolbarStyle">@style/Widget.LibAndroid.TopAppBar.OnSurface</item>
+        <item name="android:toolbarStyle">@style/Widget.LibAndroid.TopAppBar.OnSurface</item>
+        <item name="toolbarNavigationButtonStyle">
+            @style/Widget.LibAndroid.TopAppBar.Navigation.Surface
+        </item>
+    </style>
+
+    <style name="Theme.LibAndroid.primarySurface" parent="Theme.LibAndroid.Surface" />
+
+</resources>

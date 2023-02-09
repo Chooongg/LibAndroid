@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TopAppBar -->
+
+    <style name="Widget.LibAndroid.TopAppBar.PrimarySurface" parent="Widget.LibAndroid.TopAppBar.Surface" />
+
+    <style name="Widget.LibAndroid.TopAppBar.OnPrimarySurface" parent="Widget.LibAndroid.TopAppBar.OnSurface" />
+
+    <style name="Widget.LibAndroid.TopAppBar.Navigation.PrimarySurface" parent="Widget.LibAndroid.TopAppBar.Navigation.Surface" />
+
+    <!-- AppBarLayout -->
+
+    <style name="Widget.LibAndroid.AppBarLayout.PrimarySurface" parent="Widget.LibAndroid.AppBarLayout.Surface" />
+
+</resources>

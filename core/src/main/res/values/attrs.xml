@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 宽高比布局 -->
+    <!-- 宽高比例 -->
+    <attr name="sizeRatio" format="string" />
+    <declare-styleable name="RatioView">
+        <attr name="sizeRatio" />
+    </declare-styleable>
+    <declare-styleable name="RatioCardView">
+        <attr name="sizeRatio" />
+    </declare-styleable>
+    <declare-styleable name="RatioConstraintLayout">
+        <attr name="sizeRatio" />
+    </declare-styleable>
+    <declare-styleable name="RatioFrameLayout">
+        <attr name="sizeRatio" />
+    </declare-styleable>
+
+    <!-- 垂直显示文字控件 -->
+    <declare-styleable name="VerticalTextView">
+        <attr name="direction">
+            <enum name="upToDown" value="0" />
+            <enum name="downToUp" value="1" />
+            <enum name="leftToRight" value="2" />
+            <enum name="rightToLeft" value="3" />
+        </attr>
+    </declare-styleable>
+
+</resources>

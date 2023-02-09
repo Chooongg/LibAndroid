@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'chooongg.libAndroid.core'
+    namespace 'chooongg.libAndroid.net'
     compileSdk sdkConfig.compileSdk
     defaultConfig {
         minSdk sdkConfig.minSdk
@@ -25,18 +25,20 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
 }
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
-    implementation "com.google.android.material:material:$dependenciesVersion.materialVersion"
-    api 'androidx.constraintlayout:constraintlayout:2.2.0-alpha06'
+    // JSON解析
+    api 'com.google.code.gson:gson:2.10.1'
+    api 'com.github.getActivity:GsonFactory:6.3'
+    // 网络请求
+    api 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    // 调试工具-拦截器
+    api 'com.facebook.stetho:stetho-okhttp3:1.6.0'
+    api 'com.localebro:okhttpprofiler:1.0.8'
     api project(path: ':basic')
-
-    // 调试工具
-    implementation 'com.facebook.stetho:stetho:1.6.0'
 }

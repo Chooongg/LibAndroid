@@ -9,7 +9,7 @@
         android:icon="@mipmap/ic_app_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LibAndroid"
+        android:theme="@style/Theme.LibAndroid.Simple"
         tools:targetApi="31">
         <activity
             android:name="chooongg.libAndroid.simple.MainActivity"
