@@ -6,13 +6,13 @@
     android:orientation="horizontal">
 
     <com.google.android.material.navigationrail.NavigationRailView
-        android:id="@+id/navigation_view"
+        android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:menu="@menu/test" />
+        app:labelVisibilityMode="labeled" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

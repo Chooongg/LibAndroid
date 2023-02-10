@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/summary"
+        android:icon="@drawable/ic_logo"
+        android:title="概述"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/core"
+        android:icon="@drawable/ic_main_core"
+        android:title="核心"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/plugin"
+        android:icon="@drawable/ic_main_plugin"
+        android:title="插件"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/copyright"
+        android:icon="@drawable/ic_main_copyright"
+        android:title="版权"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_main_about"
+        android:title="关于"
+        app:showAsAction="ifRoom" />
+</menu>

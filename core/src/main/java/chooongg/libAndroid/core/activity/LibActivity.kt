@@ -2,6 +2,7 @@ package chooongg.libAndroid.core.activity
 
 import android.content.Context
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -9,6 +10,7 @@ import chooongg.libAndroid.basic.ext.attrBoolean
 import chooongg.libAndroid.basic.ext.logDClass
 import chooongg.libAndroid.core.annotation.EdgeToEdge
 import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.fragment.LibFragment
 
 abstract class LibActivity : AppCompatActivity() {
 
@@ -21,6 +23,8 @@ abstract class LibActivity : AppCompatActivity() {
     protected open fun initView(savedInstanceState: Bundle?) {}
 
     protected open fun initContent(savedInstanceState: Bundle?) {}
+
+    open fun onRefresh(any: Any? = null) {}
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,10 +62,6 @@ abstract class LibActivity : AppCompatActivity() {
 
     protected open fun onCreateTopAppBar() {
         if (attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) return
-    }
-
-    protected open fun onCreateNavigation() {
-
     }
 
     override fun onDestroy() {

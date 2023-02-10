@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="TopAppBarLayout">
+        <attr name="setActionBar" format="boolean" />
+        <attr name="heightMode" format="enum">
+            <enum name="small" value="0" />
+            <enum name="medium" value="1" />
+            <enum name="large" value="2" />
+        </attr>
+        <attr name="title" />
+        <attr name="subtitle" />
+        <attr name="navigationIconTint" />
+        <attr name="titleCentered" />
+        <attr name="subtitleCentered" />
+        <attr name="logoAdjustViewBounds" />
+        <attr name="logoScaleType" />
+
+    </declare-styleable>
+
     <!-- 宽高比布局 -->
     <!-- 宽高比例 -->
     <attr name="sizeRatio" format="string" />

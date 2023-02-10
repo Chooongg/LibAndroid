@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<chooongg.libAndroid.core.widget.TopAppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/topAppBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:setActionBar="false"
+    app:title="扩展">
+
+</chooongg.libAndroid.core.widget.TopAppBarLayout>

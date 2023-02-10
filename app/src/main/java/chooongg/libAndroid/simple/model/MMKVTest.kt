@@ -1,4 +1,4 @@
-package chooongg.libAndroid.simple
+package chooongg.libAndroid.simple.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -22,14 +22,14 @@ object MMKVTest : MMKVContainer() {
     var stringSetOrNull by mmkvStringSetOrNull(null)
     var bytes by mmkvBytes(byteArrayOf(1))
     var bytesOrNull by mmkvBytesOrNull(null)
-    var parcelable by mmkvParcelable(TestParcelable())
+    var parcelable by mmkvParcelable(TestParcelable(null))
     var parcelableOrNull by mmkvParcelableOrNull(null)
 
-    class TestParcelable() : Parcelable {
-        constructor(parcel: Parcel) : this() {
-        }
+    data class TestParcelable(val string: String?) : Parcelable {
+        constructor(parcel: Parcel) : this(parcel.readString())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeString(string)
         }
 
         override fun describeContents(): Int {

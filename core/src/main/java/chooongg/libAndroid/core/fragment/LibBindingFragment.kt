@@ -1,10 +1,13 @@
-package chooongg.libAndroid.core.activity
+package chooongg.libAndroid.core.fragment
 
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.viewbinding.ViewBinding
 import chooongg.libAndroid.core.ext.getBindingT
 
-abstract class LibBindingActivity<B : ViewBinding> : LibActivity() {
+abstract class LibBindingFragment<B : ViewBinding> : LibFragment() {
 
     protected open fun getViewBindingTIndex() = 0
 
@@ -14,8 +17,10 @@ abstract class LibBindingActivity<B : ViewBinding> : LibActivity() {
 
     override fun initLayout() = ResourcesCompat.ID_NULL
 
-    override fun onCreateContentView() {
-        setContentView(getBindingT<B>(getViewBindingTIndex()).apply { _binding = this }.root)
+    override fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup?): View? {
+        return getBindingT<B>(getViewBindingTIndex(), inflater, container, false).also {
+            _binding = it
+        }.root
     }
 
     override fun onDestroy() {
