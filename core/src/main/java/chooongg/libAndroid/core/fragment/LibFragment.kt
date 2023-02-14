@@ -1,6 +1,7 @@
 package chooongg.libAndroid.core.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,10 @@ import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import chooongg.libAndroid.basic.ext.logDClass
 import chooongg.libAndroid.basic.ext.resString
 import chooongg.libAndroid.core.activity.LibActivity
 import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.widget.TopAppBarLayout
 
 abstract class LibFragment : Fragment() {
 
@@ -57,7 +58,14 @@ abstract class LibFragment : Fragment() {
         )
         initView(savedInstanceState)
         initContent(savedInstanceState)
-        logDClass("Fragment", javaClass, "---------- $title ---------- onCreateView")
+        if (libActivity?.supportActionBar == null) {
+            view.findViewWithTag<TopAppBarLayout>("Lib_TopAppBarLayout")?.let {
+                if (it.topAppBar.title == null) {
+                    it.topAppBar.title = title
+                }
+            }
+        }
+        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onCreateView")
     }
 
     protected open fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -79,6 +87,11 @@ abstract class LibFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStart")
+    }
+
     override fun onResume() {
         super.onResume()
         if (!isLoaded && !isHidden) {
@@ -86,11 +99,18 @@ abstract class LibFragment : Fragment() {
             initContentByLazy()
         }
         onBackPressedCallback.isEnabled = onBackPressedInterceptEnable
+        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onResume")
     }
 
     override fun onPause() {
         super.onPause()
         onBackPressedCallback.isEnabled = false
+        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStop")
     }
 
     var onBackPressedInterceptEnable = false
@@ -116,6 +136,6 @@ abstract class LibFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        logDClass("Fragment", javaClass, "---------- $title ---------- onDestroyView")
+        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onDestroyView")
     }
 }

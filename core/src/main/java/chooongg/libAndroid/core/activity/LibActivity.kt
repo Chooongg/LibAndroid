@@ -2,15 +2,13 @@ package chooongg.libAndroid.core.activity
 
 import android.content.Context
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
+import android.util.Log
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import chooongg.libAndroid.basic.ext.attrBoolean
-import chooongg.libAndroid.basic.ext.logDClass
 import chooongg.libAndroid.core.annotation.EdgeToEdge
 import chooongg.libAndroid.core.annotation.Title
-import chooongg.libAndroid.core.fragment.LibFragment
 
 abstract class LibActivity : AppCompatActivity() {
 
@@ -34,7 +32,7 @@ abstract class LibActivity : AppCompatActivity() {
         onCreateTopAppBar()
         onCreateContentView()
         initView(savedInstanceState)
-        logDClass("Activity", javaClass, "---------- $title ---------- onCreate")
+        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onCreateView")
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -64,8 +62,28 @@ abstract class LibActivity : AppCompatActivity() {
         if (attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) return
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStop")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        logDClass("Activity", javaClass, "---------- $title ---------- onDestroy")
+        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onDestroy")
     }
 }

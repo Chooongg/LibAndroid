@@ -3,7 +3,6 @@ package chooongg.libAndroid.simple
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import chooongg.libAndroid.core.activity.LibBindingModelActivity
-import chooongg.libAndroid.core.fragment.LibFragment
 import chooongg.libAndroid.core.widget.viewPager.FragmentAdapter
 import chooongg.libAndroid.simple.modules.main.*
 import com.chooongg.libAndroid.R
@@ -19,13 +18,16 @@ class MainActivity : LibBindingModelActivity<ActivityMainBinding, MainActivity.M
     private val navigationBarView get() = binding.navigationView as NavigationBarView
 
     private val fragmentAdapter by lazy {
-        FragmentAdapter(activity, mutableListOf<LibFragment>().apply {
-            add(MainSummaryFragment())
-            add(MainCoreFragment())
-            add(MainPluginFragment())
-            add(MainCopyrightFragment())
-            add(MainAboutFragment())
-        })
+        FragmentAdapter(
+            activity,
+            mutableListOf(
+                MainSummaryFragment(),
+                MainCoreFragment(),
+                MainPluginFragment(),
+                MainCopyrightFragment(),
+                MainAboutFragment()
+            )
+        )
     }
 
     override fun initLayout() = R.layout.activity_main

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LibAndroid</string>
+
+    <string name="project_summary">LibAndroid 是一个快速开发的底层仓库，它提供了一系列的工具和框架，可以帮助开发者快速构建和部署 Android 应用程序。它提供了一个简单的 API，可以让开发者快速实现功能，并且可以轻松地与现有的 Android 应用程序集成。LibAndroid 还提供了一个强大的构建系统，可以让开发者快速构建和部署应用程序，以及一个完整的文档，可以帮助开发者快速上手。</string>
 </resources>

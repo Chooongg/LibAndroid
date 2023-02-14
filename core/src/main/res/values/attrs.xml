@@ -8,14 +8,74 @@
             <enum name="medium" value="1" />
             <enum name="large" value="2" />
         </attr>
+        <attr name="syncStatusBarColor" format="boolean" />
+
         <attr name="title" />
-        <attr name="subtitle" />
-        <attr name="navigationIconTint" />
         <attr name="titleCentered" />
+        <attr name="titleTextColor" />
+        <attr name="titleMargin" />
+        <attr name="titleMarginStart" />
+        <attr name="titleMarginEnd" />
+        <attr name="titleMarginTop" />
+        <attr name="titleMarginBottom" />
+        <attr name="titleMargins" />
+        <attr name="titleTextAppearance" />
+        <attr name="subtitle" />
         <attr name="subtitleCentered" />
+        <attr name="subtitleTextColor" />
+        <attr name="subtitleTextAppearance" />
+        <attr name="android:gravity" />
+        <attr name="contentInsetStart" />
+        <attr name="contentInsetEnd" />
+        <attr name="contentInsetLeft" />
+        <attr name="contentInsetRight" />
+        <attr name="contentInsetStartWithNavigation" />
+        <attr name="contentInsetEndWithActions" />
+        <attr name="maxButtonHeight" />
+        <attr name="buttonGravity" />
+        <attr name="collapseIcon" />
+        <attr name="collapseContentDescription" />
+        <attr name="navigationIcon" />
+        <attr name="navigationIconTint" />
+        <attr name="navigationContentDescription" />
+        <attr name="logo" />
+        <attr name="logoDescription" />
         <attr name="logoAdjustViewBounds" />
         <attr name="logoScaleType" />
+        <attr name="menu" />
+        <attr name="popupTheme" />
 
+        <attr name="expanded" />
+        <attr name="android:keyboardNavigationCluster" />
+        <attr name="android:touchscreenBlocksFocus" />
+        <attr name="liftOnScroll" />
+        <attr name="liftOnScrollTargetViewId" />
+        <attr name="liftOnScrollColor" />
+        <attr name="statusBarForeground" />
+
+        <attr name="expandedTitleMargin" />
+        <attr name="expandedTitleMarginStart" />
+        <attr name="expandedTitleMarginTop" />
+        <attr name="expandedTitleMarginEnd" />
+        <attr name="expandedTitleMarginBottom" />
+        <attr name="expandedTitleTextAppearance" />
+        <attr name="collapsedTitleTextAppearance" />
+        <attr name="titleTextEllipsize" />
+        <attr name="expandedTitleTextColor" />
+        <attr name="collapsedTitleTextColor" />
+        <attr name="contentScrim" />
+        <attr name="statusBarScrim" />
+        <attr name="toolbarId" />
+        <attr name="scrimVisibleHeightTrigger" />
+        <attr name="scrimAnimationDuration" />
+        <attr name="collapsedTitleGravity" />
+        <attr name="expandedTitleGravity" />
+        <attr name="titleEnabled" />
+        <attr name="titleCollapseMode" />
+        <attr name="maxLines" />
+        <attr name="forceApplySystemWindowInsetTop" />
+        <attr name="extraMultilineHeightEnabled" />
+        <attr name="titlePositionInterpolator" />
     </declare-styleable>
 
     <!-- 宽高比布局 -->

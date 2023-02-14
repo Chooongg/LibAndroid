@@ -4,8 +4,28 @@
     android:id="@+id/topAppBarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:setActionBar="false"
-    app:title="核心"
-    app:titleCentered="true">
+    app:heightMode="large"
+    app:setActionBar="false">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/contentMedium"
+                android:text="@string/project_summary"
+                android:textAppearance="?textAppearanceTitleMedium" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
 </chooongg.libAndroid.core.widget.TopAppBarLayout>

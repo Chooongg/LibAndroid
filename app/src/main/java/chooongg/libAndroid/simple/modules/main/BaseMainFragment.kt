@@ -25,14 +25,14 @@ abstract class BaseMainFragment<B : ViewBinding> : LibBindingFragment<B>(),
 
     override fun onResume() {
         super.onResume()
-        val appBarLayout = view?.findViewById<TopAppBarLayout>(R.id.topAppBarLayout)?.appBarLayout
-        appBarLayout?.addLiftOnScrollListener(this)
+//        val appBarLayout = view?.findViewById<TopAppBarLayout>(R.id.topAppBarLayout)
+//        appBarLayout?.addLiftOnScrollListener(this)
     }
 
     override fun onStop() {
         super.onStop()
-        val appBarLayout = view?.findViewById<TopAppBarLayout>(R.id.topAppBarLayout)?.appBarLayout
-        appBarLayout?.removeLiftOnScrollListener(this)
+//        val appBarLayout = view?.findViewById<TopAppBarLayout>(R.id.topAppBarLayout)
+//        appBarLayout?.removeLiftOnScrollListener(this)
     }
 
     override fun onUpdate(elevation: Float, backgroundColor: Int) {

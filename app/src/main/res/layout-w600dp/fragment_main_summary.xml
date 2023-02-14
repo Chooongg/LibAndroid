@@ -4,7 +4,7 @@
     android:id="@+id/topAppBarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:heightMode="large"
+    app:heightMode="small"
     app:setActionBar="false">
 
     <androidx.core.widget.NestedScrollView
@@ -16,15 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/d96"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="@dimen/contentMedium"
-                android:layout_marginTop="@dimen/contentMedium"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_logo" />
 
             <TextView
                 android:layout_width="match_parent"

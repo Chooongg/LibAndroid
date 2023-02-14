@@ -22,7 +22,8 @@ class TopAppBarLayout @JvmOverloads constructor(
 
     val appBarLayout =
         AppBarLayout(context, attrs, com.google.android.material.R.attr.appBarLayoutStyle).also {
-            fitsSystemWindows = edgeToEdge?.isEdgeToEdge == true
+            it.id = R.id.lib_appBarLayout
+            it.fitsSystemWindows = edgeToEdge?.isEdgeToEdge == true
             addView(it, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
                 behavior = AppBarLayoutBehavior()
             })
@@ -32,26 +33,41 @@ class TopAppBarLayout @JvmOverloads constructor(
         private set
 
     val topAppBar =
-        TopAppBar(context, attrs, com.google.android.material.R.attr.toolbarStyle)
+        TopAppBar(context, attrs, com.google.android.material.R.attr.toolbarStyle).apply {
+            id = R.id.lib_topAppBar
+        }
 
     init {
+        tag = "Lib_TopAppBarLayout"
         val a = context.obtainStyledAttributes(attrs, R.styleable.TopAppBarLayout, defStyleAttr, 0)
         createViewHierarchy(
             attrs,
             a.getInt(R.styleable.TopAppBarLayout_heightMode, 0),
             a.getBoolean(R.styleable.TopAppBarLayout_setActionBar, true)
         )
+        if (a.getBoolean(R.styleable.TopAppBarLayout_syncStatusBarColor, true)
+            && edgeToEdge?.isEdgeToEdge != true
+        ) {
+            context.getActivity()?.let {
+                appBarLayout.addLiftOnScrollListener { _, backgroundColor ->
+                    it.window.statusBarColor = backgroundColor
+                }
+            }
+        }
         a.recycle()
     }
 
     private fun createViewHierarchy(attrs: AttributeSet?, heightMode: Int, setActionBar: Boolean) {
         if (heightMode == 0) {
-            appBarLayout.addView(topAppBar, AppBarLayout.LayoutParams(-1, -2))
+            appBarLayout.addView(topAppBar, AppBarLayout.LayoutParams(-1, -2).apply {
+                scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
+            })
         } else {
             val defAttr = if (heightMode == 1) {
                 com.google.android.material.R.attr.collapsingToolbarLayoutMediumStyle
             } else com.google.android.material.R.attr.collapsingToolbarLayoutLargeStyle
             collapsingToolbarLayout = CollapsingToolbarLayout(context, attrs, defAttr).also {
+                it.id = R.id.lib_collapsingToolbarLayout
                 val layoutHeight = attrDimensionPixelSize(
                     if (heightMode == 1) com.google.android.material.R.attr.collapsingToolbarLayoutMediumSize
                     else com.google.android.material.R.attr.collapsingToolbarLayoutLargeSize,
@@ -79,4 +95,11 @@ class TopAppBarLayout @JvmOverloads constructor(
         }
     }
 
+    fun addLiftOnScrollListener(listener: AppBarLayout.LiftOnScrollListener) {
+        appBarLayout.addLiftOnScrollListener(listener)
+    }
+
+    fun removeLiftOnScrollListener(listener: AppBarLayout.LiftOnScrollListener) {
+        appBarLayout.removeLiftOnScrollListener(listener)
+    }
 }
