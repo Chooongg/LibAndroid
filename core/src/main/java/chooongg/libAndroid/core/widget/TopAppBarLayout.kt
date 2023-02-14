@@ -24,9 +24,11 @@ class TopAppBarLayout @JvmOverloads constructor(
         AppBarLayout(context, attrs, com.google.android.material.R.attr.appBarLayoutStyle).also {
             it.id = R.id.lib_appBarLayout
             it.fitsSystemWindows = edgeToEdge?.isEdgeToEdge == true
-            addView(it, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-                behavior = AppBarLayoutBehavior()
-            })
+            if (!isInEditMode) addView(
+                it, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+                    behavior = AppBarLayoutBehavior()
+                }
+            )
         }
 
     var collapsingToolbarLayout: CollapsingToolbarLayout? = null
@@ -39,22 +41,25 @@ class TopAppBarLayout @JvmOverloads constructor(
 
     init {
         tag = "Lib_TopAppBarLayout"
-        val a = context.obtainStyledAttributes(attrs, R.styleable.TopAppBarLayout, defStyleAttr, 0)
-        createViewHierarchy(
-            attrs,
-            a.getInt(R.styleable.TopAppBarLayout_heightMode, 0),
-            a.getBoolean(R.styleable.TopAppBarLayout_setActionBar, true)
-        )
-        if (a.getBoolean(R.styleable.TopAppBarLayout_syncStatusBarColor, true)
-            && edgeToEdge?.isEdgeToEdge != true
-        ) {
-            context.getActivity()?.let {
-                appBarLayout.addLiftOnScrollListener { _, backgroundColor ->
-                    it.window.statusBarColor = backgroundColor
+        if (!isInEditMode) {
+            val a =
+                context.obtainStyledAttributes(attrs, R.styleable.TopAppBarLayout, defStyleAttr, 0)
+            createViewHierarchy(
+                attrs,
+                a.getInt(R.styleable.TopAppBarLayout_heightMode, 0),
+                a.getBoolean(R.styleable.TopAppBarLayout_setActionBar, true)
+            )
+            if (a.getBoolean(R.styleable.TopAppBarLayout_syncStatusBarColor, true)
+                && edgeToEdge?.isEdgeToEdge != true
+            ) {
+                context.getActivity()?.let {
+                    appBarLayout.addLiftOnScrollListener { _, backgroundColor ->
+                        it.window.statusBarColor = backgroundColor
+                    }
                 }
             }
+            a.recycle()
         }
-        a.recycle()
     }
 
     private fun createViewHierarchy(attrs: AttributeSet?, heightMode: Int, setActionBar: Boolean) {

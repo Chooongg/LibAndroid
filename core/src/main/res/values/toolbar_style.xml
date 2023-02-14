@@ -21,8 +21,6 @@
         <item name="contentInsetStart">@dimen/contentMedium</item>
         <item name="contentInsetEnd">@dimen/contentMedium</item>
         <item name="titleMargin">0dp</item>
-        <item name="titleMarginStart">16dp</item>
-        <item name="titleMarginEnd">16dp</item>
     </style>
 
     <style name="Widget.LibAndroid.TopAppBar.Primary" parent="Widget.MaterialComponents.Toolbar.Primary">

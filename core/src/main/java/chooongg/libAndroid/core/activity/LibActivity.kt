@@ -10,6 +10,7 @@ import chooongg.libAndroid.basic.ext.attrBoolean
 import chooongg.libAndroid.core.annotation.EdgeToEdge
 import chooongg.libAndroid.core.annotation.Title
 
+@EdgeToEdge(true)
 abstract class LibActivity : AppCompatActivity() {
 
     inline val context: Context get() = this

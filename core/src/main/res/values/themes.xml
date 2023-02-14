@@ -2,13 +2,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Theme -->
-
     <style name="Base.Theme.LibAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:actionBarSize">@dimen/lib_action_bar_size</item>
         <item name="actionBarSize">@dimen/lib_action_bar_size</item>
         <item name="android:colorBackground">?colorSurface</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
         <item name="android:actionBarStyle">?toolbarStyle</item>
 
         <item name="snackbarStyle">@style/Widget.LibAndroid.Snackbar</item>
@@ -18,8 +17,6 @@
         </item>
 
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
-        </item>
     </style>
 
     <style name="Theme.LibAndroid.Surface" parent="Base.Theme.LibAndroid">
