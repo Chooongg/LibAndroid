@@ -30,6 +30,7 @@ android {
 dependencies {
     api project(path: ':basic')
     api project(path: ':core')
+    api project(path: ':form')
     api project(path: ':net')
     api project(path: ':recyclerView')
 }

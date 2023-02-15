@@ -1,9 +1,6 @@
 package chooongg.libAndroid.net
 
 import chooongg.libAndroid.basic.APPLICATION
-import chooongg.libAndroid.basic.ext.isAppDebug
-import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.Cache
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -103,10 +100,6 @@ object RetrofitManager {
         @Suppress("UNCHECKED_CAST")
         fun build(): T {
             okHttpClientBlock?.invoke(okhttpBuilder)
-            if (isAppDebug()) {
-                okhttpBuilder.addInterceptor(OkHttpProfilerInterceptor())
-            }
-            okhttpBuilder.addNetworkInterceptor(StethoInterceptor())
             retrofitBuilder.client(okhttpBuilder.build())
             if (baseUrl != null) retrofitBuilder.baseUrl(baseUrl!!)
             retrofitBlock?.invoke(retrofitBuilder)

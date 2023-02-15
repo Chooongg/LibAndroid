@@ -1,4 +1,4 @@
-package chooongg.libAndroid.eventFlow
+package chooongg.libAndroid.core.eventFlow
 
 import androidx.lifecycle.*
 import chooongg.libAndroid.basic.ext.logE

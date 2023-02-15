@@ -15,11 +15,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "LibAndroid"
 include ':app'
+include ':all'
 include ':basic'
 include ':core'
-include ':plugin-echarts'
+include ':form'
 include ':net'
 include ':recyclerView'
-include ':plugin-eventFlow'
-include ':all'
-include ':form'
+include ':plugin-echarts'

@@ -1,4 +1,4 @@
-package chooongg.libAndroid.eventFlow
+package chooongg.libAndroid.core.eventFlow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

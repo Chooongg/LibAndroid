@@ -16,6 +16,7 @@ ext {
             appcompatVersion: '1.7.0-alpha02',
             materialVersion : '1.9.0-alpha01',
             lifecycleVersion: '2.6.0-beta01',
-            stetch3Version  : '3.1.0'
+            stetch3Version  : '3.1.0',
+            flipperVersion  : '0.180.0'
     ]
 }

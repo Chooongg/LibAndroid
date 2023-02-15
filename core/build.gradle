@@ -34,9 +34,11 @@ android {
 dependencies {
     implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
     implementation "com.google.android.material:material:$dependenciesVersion.materialVersion"
-    api 'androidx.constraintlayout:constraintlayout:2.2.0-alpha07'
-    api 'androidx.work:work-runtime-ktx:2.8.0'
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$dependenciesVersion.lifecycleVersion"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$dependenciesVersion.lifecycleVersion"
     api 'com.github.getActivity:XXPermissions:16.6'
+    api 'androidx.work:work-runtime-ktx:2.8.0'
+    api 'androidx.constraintlayout:constraintlayout:2.2.0-alpha07'
     api 'com.google.android.flexbox:flexbox:3.0.0'
     api project(path: ':basic')
     api "io.github.panpf.sketch3:sketch:$dependenciesVersion.stetch3Version"
@@ -45,7 +47,4 @@ dependencies {
     api "io.github.panpf.sketch3:sketch-video:$dependenciesVersion.stetch3Version"
     api "io.github.panpf.sketch3:sketch-svg:$dependenciesVersion.stetch3Version"
     api "io.github.panpf.sketch3:sketch-zoom:$dependenciesVersion.stetch3Version"
-
-    // 调试工具
-    implementation 'com.facebook.stetho:stetho:1.6.0'
 }

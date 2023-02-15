@@ -34,5 +34,11 @@ android {
 dependencies {
     implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
     implementation "com.google.android.material:material:$dependenciesVersion.materialVersion"
-    implementation project(path: ':core')
+    implementation project(path: ':all')
+    // 调试工具
+    // 调试工具
+    debugImplementation 'com.facebook.soloader:soloader:0.10.4'
+    debugImplementation "com.facebook.flipper:flipper:$dependenciesVersion.flipperVersion"
+    debugImplementation "com.facebook.flipper:flipper-network-plugin:$dependenciesVersion.flipperVersion"
+    releaseImplementation "com.facebook.flipper:flipper-noop:$dependenciesVersion.flipperVersion"
 }
