@@ -24,6 +24,11 @@
         <attr name="snapMaxFlingSizeFraction" format="float" />
     </declare-styleable>
 
+    <!-- 状态布局 -->
+    <declare-styleable name="StateLayout">
+        <attr name="beginningSuccess" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="TopAppBarLayout">
         <attr name="setActionBar" format="boolean" />
         <attr name="heightMode" format="enum">

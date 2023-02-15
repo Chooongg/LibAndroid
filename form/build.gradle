@@ -1,11 +1,10 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-parcelize'
 }
 
 android {
-    namespace 'chooongg.libAndroid.recyclerView'
+    namespace 'chooongg.libAndroid.form'
     compileSdk sdkConfig.compileSdk
     defaultConfig {
         minSdk sdkConfig.minSdk
@@ -26,15 +25,9 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
 }
 
 dependencies {
-    api project(path: ':basic')
-    api 'androidx.recyclerview:recyclerview:1.3.0-rc01'
-    api 'com.github.fondesa:recycler-view-divider:3.5.0'
-    api "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.0-beta04"
+    implementation project(path: ':basic')
+    implementation project(path: ':recyclerView')
 }
