@@ -1,5 +1,6 @@
 package chooongg.libAndroid.form
 
+import androidx.collection.ArraySet
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import chooongg.libAndroid.basic.ext.hideIME
@@ -11,7 +12,7 @@ class FormAdapter {
 
     internal var listener: FormEventListener? = null
 
-    private val itemTypeHold = sortedSetOf<String>()
+    internal val itemTypeHold = ArraySet<Pair<Class<*>, Class<*>>>()
 
     fun bind(recyclerView: RecyclerView, listener: FormEventListener? = null) {
         recyclerView.adapter = adapter
