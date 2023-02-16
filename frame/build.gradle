@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -25,6 +26,11 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -33,4 +39,17 @@ dependencies {
     api project(path: ':form')
     api project(path: ':net')
     api project(path: ':recyclerView')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "chooongg.libAndroid"
+                artifactId = "frame"
+                version = rootProject.ext.versionName
+            }
+        }
+    }
 }

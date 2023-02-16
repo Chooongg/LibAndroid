@@ -34,7 +34,7 @@ android {
 dependencies {
     implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
     implementation "com.google.android.material:material:$dependenciesVersion.materialVersion"
-    implementation project(path: ':all')
+    implementation project(path: ':frame')
     // 调试工具
     // 调试工具
     debugImplementation 'com.facebook.soloader:soloader:0.10.4'

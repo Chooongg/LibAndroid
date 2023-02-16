@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 open class LayoutViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    val context get() = itemView.context
+
     private val views: SparseArray<View> = SparseArray()
 
     open fun <T : View> getView(@IdRes viewId: Int): T {

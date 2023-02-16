@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -24,8 +25,26 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$dependenciesVersion.appcompatVersion"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "chooongg.libAndroid"
+                artifactId = "plugin-echarts"
+                version = rootProject.ext.versionName
+            }
+        }
+    }
 }

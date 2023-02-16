@@ -15,7 +15,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "LibAndroid"
 include ':app'
-include ':all'
+include ':frame'
 include ':basic'
 include ':core'
 include ':form'
