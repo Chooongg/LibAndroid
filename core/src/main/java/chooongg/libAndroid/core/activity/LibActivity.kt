@@ -3,12 +3,22 @@ package chooongg.libAndroid.core.activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
+import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import chooongg.libAndroid.basic.ext.attrBoolean
+import chooongg.libAndroid.core.annotation.ActivityTransitions
 import chooongg.libAndroid.core.annotation.EdgeToEdge
 import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.ext.EXTRA_TRANSITION_NAME
+import chooongg.libAndroid.core.ext.TRANSITION_NAME_CONTAINER_TRANSFORM
+import com.google.android.material.motion.MotionUtils
+import com.google.android.material.transition.platform.MaterialArcMotion
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
+import com.google.android.material.transition.platform.MaterialSharedAxis
 
 @EdgeToEdge(true)
 abstract class LibActivity : AppCompatActivity() {
@@ -26,6 +36,7 @@ abstract class LibActivity : AppCompatActivity() {
     open fun onRefresh(any: Any? = null) {}
 
     final override fun onCreate(savedInstanceState: Bundle?) {
+        onCreateTransitions()
         super.onCreate(savedInstanceState)
         onCreateTitle()
         onCreateEdgeToEdge()
@@ -43,6 +54,37 @@ abstract class LibActivity : AppCompatActivity() {
 
     protected open fun onCreateContentView() {
         setContentView(initLayout())
+    }
+
+    protected open fun onCreateTransitions() {
+        if (javaClass.getAnnotation(ActivityTransitions::class.java)?.enable != true) return
+        with(window) {
+            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+            sharedElementsUseOverlay = false
+            enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
+            exitTransition = null
+            returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+            reenterTransition = null
+            transitionBackgroundFadeDuration = MotionUtils.resolveThemeDuration(
+                context, com.google.android.material.R.attr.motionDurationLong1, -1
+            ).toLong()
+        }
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        val transitionName = intent.getStringExtra(EXTRA_TRANSITION_NAME)
+        if (transitionName == TRANSITION_NAME_CONTAINER_TRANSFORM) {
+            findViewById<FrameLayout>(android.R.id.content).transitionName = transitionName
+            setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+            window.sharedElementEnterTransition = buildContainerTransform(true)
+            window.sharedElementReturnTransition = buildContainerTransform(false)
+        }
+    }
+
+    protected open fun buildContainerTransform(entering: Boolean): MaterialContainerTransform {
+        val transform = MaterialContainerTransform(this, entering)
+        transform.addTarget(android.R.id.content)
+        transform.fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+        transform.pathMotion = MaterialArcMotion()
+        return transform
     }
 
     private fun onCreateTitle() {
