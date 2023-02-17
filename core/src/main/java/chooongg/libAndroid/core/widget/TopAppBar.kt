@@ -7,9 +7,8 @@ import com.google.android.material.appbar.MaterialToolbar
 class TopAppBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = androidx.appcompat.R.attr.toolbarStyle
 ) : MaterialToolbar(context, attrs, defStyleAttr) {
-
 
 
 }
