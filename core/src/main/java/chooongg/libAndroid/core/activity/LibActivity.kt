@@ -1,6 +1,7 @@
 package chooongg.libAndroid.core.activity
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
@@ -98,6 +99,7 @@ abstract class LibActivity : AppCompatActivity() {
         javaClass.getAnnotation(EdgeToEdge::class.java)?.let {
             if (!it.isEdgeToEdge) return
             WindowCompat.setDecorFitsSystemWindows(window, false)
+            window.statusBarColor = Color.TRANSPARENT
         }
     }
 
