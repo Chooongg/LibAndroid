@@ -6,4 +6,6 @@ import com.chooongg.libAndroid.databinding.FragmentMainCoreBinding
 
 @Title("核心")
 class MainCoreFragment : BaseMainFragment<FragmentMainCoreBinding>() {
+
+
 }
