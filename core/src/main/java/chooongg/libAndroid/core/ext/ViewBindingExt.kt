@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import chooongg.libAndroid.basic.ext.getTClass
+import chooongg.libAndroid.basic.ext.getGenericsClass
 
 @Suppress("UNCHECKED_CAST")
 fun <B : ViewBinding> AppCompatActivity.getBindingT(index: Int): B {
-    val clazz = javaClass.getTClass(index) as Class<B>
+    val clazz = javaClass.getGenericsClass(index) as Class<B>
     val method = clazz.getMethod("inflate", LayoutInflater::class.java)
     val b = method.invoke(null, LayoutInflater.from(this)) as B
     (b as? ViewDataBinding)?.lifecycleOwner = this
@@ -26,7 +26,7 @@ fun <B : ViewBinding> Fragment.getBindingT(
     parent: ViewGroup?,
     attachToParent: Boolean
 ): B {
-    val clazz = javaClass.getTClass(index) as Class<B>
+    val clazz = javaClass.getGenericsClass(index) as Class<B>
     val b = clazz.getMethod(
         "inflate",
         LayoutInflater::class.java,

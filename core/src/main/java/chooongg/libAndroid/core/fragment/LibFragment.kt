@@ -11,6 +11,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import chooongg.libAndroid.basic.ext.getLogcatPath
 import chooongg.libAndroid.basic.ext.resString
 import chooongg.libAndroid.core.activity.LibActivity
 import chooongg.libAndroid.core.annotation.Title
@@ -65,7 +66,10 @@ abstract class LibFragment : Fragment() {
                 }
             }
         }
-        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onCreateView")
+        Log.d(
+            "Fragment",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onCreateView"
+        )
     }
 
     protected open fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -89,7 +93,10 @@ abstract class LibFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStart")
+        Log.d(
+            "Fragment",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStart"
+        )
     }
 
     override fun onResume() {
@@ -99,18 +106,27 @@ abstract class LibFragment : Fragment() {
             initContentByLazy()
         }
         onBackPressedCallback.isEnabled = onBackPressedInterceptEnable
-        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onResume")
+        Log.d(
+            "Fragment",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onResume"
+        )
     }
 
     override fun onPause() {
         super.onPause()
         onBackPressedCallback.isEnabled = false
-        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onPause")
+        Log.d(
+            "Fragment",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onPause"
+        )
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStop")
+        Log.d(
+            "Fragment",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStop"
+        )
     }
 
     var onBackPressedInterceptEnable = false
@@ -136,6 +152,9 @@ abstract class LibFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("Fragment", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onDestroyView")
+        Log.d(
+            "Fragment",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onDestroyView"
+        )
     }
 }

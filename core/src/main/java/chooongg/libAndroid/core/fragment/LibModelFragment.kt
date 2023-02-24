@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelLazy
-import chooongg.libAndroid.basic.ext.getTClass
+import chooongg.libAndroid.basic.ext.getGenericsClass
 
 abstract class LibModelFragment<M : ViewModel> : LibFragment() {
 
@@ -12,7 +12,7 @@ abstract class LibModelFragment<M : ViewModel> : LibFragment() {
 
     @Suppress("UNCHECKED_CAST", "LeakingThis")
     val model: M by ViewModelLazy(
-        (javaClass.getTClass(getViewModelTIndex()) as Class<M>).kotlin,
+        (javaClass.getGenericsClass(getViewModelTIndex()) as Class<M>).kotlin,
         { viewModelStore },
         { defaultViewModelProviderFactory },
         { defaultViewModelCreationExtras }

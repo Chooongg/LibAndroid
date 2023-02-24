@@ -20,7 +20,6 @@ private fun getTag(offset: Int): String {
 }
 
 private fun getClassTag(clazz: Class<*>): String {
-    val thread = Thread.currentThread()
     return if (clazz.isAnnotationPresent(Metadata::class.java)) {
         String.format("\n at %s(%s.kt:%d)", clazz.name, clazz.simpleName, 0)
     } else String.format("\n at %s(%s.java:%d)", clazz.name, clazz.simpleName, 0)

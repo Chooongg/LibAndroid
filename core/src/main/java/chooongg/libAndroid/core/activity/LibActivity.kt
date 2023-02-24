@@ -4,12 +4,15 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import chooongg.libAndroid.basic.ext.attrBoolean
+import chooongg.libAndroid.basic.ext.getLogcatPath
 import chooongg.libAndroid.core.annotation.ActivityTransitions
 import chooongg.libAndroid.core.annotation.EdgeToEdge
 import chooongg.libAndroid.core.annotation.Title
@@ -41,20 +44,18 @@ abstract class LibActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         onCreateTitle()
         onCreateEdgeToEdge()
+        autoSetContentView()
 
-        onCreateTopAppBar()
-        onCreateContentView()
         initView(savedInstanceState)
-        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onCreateView")
+        Log.d(
+            "Activity",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onCreateView"
+        )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         initContent(savedInstanceState)
-    }
-
-    protected open fun onCreateContentView() {
-        setContentView(initLayout())
     }
 
     protected open fun onCreateTransitions() {
@@ -103,32 +104,80 @@ abstract class LibActivity : AppCompatActivity() {
         }
     }
 
-    protected open fun onCreateTopAppBar() {
-        if (attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) return
+    /**
+     * 自动创建内容视图
+     */
+    protected open fun autoSetContentView() {
+        setContentView(initLayout())
+    }
+
+    /**
+     * 创建顶部栏
+     * @return Triple<总布局, 添加内容的父布局, 添加内容子项的位置>
+     */
+    protected open fun onCreateAppBarParent(): Triple<ViewGroup, ViewGroup, Int>? = null
+
+    override fun setContentView(layoutResID: Int) {
+        setContentView(layoutInflater.inflate(layoutResID, null))
+    }
+
+    override fun setContentView(view: View?) {
+        if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) {
+            val appBarParent = onCreateAppBarParent()
+            if (appBarParent != null) {
+                if (view != null) appBarParent.second.addView(view, appBarParent.third)
+                super.setContentView(appBarParent.first)
+            } else super.setContentView(view)
+        } else super.setContentView(view)
+    }
+
+    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
+        if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) {
+            val appBarParent = onCreateAppBarParent()
+            if (appBarParent != null) {
+                if (view != null) appBarParent.second.addView(view, appBarParent.third, params)
+                super.setContentView(appBarParent.first)
+            } else super.setContentView(view)
+        } else super.setContentView(view)
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStart")
+        Log.d(
+            "Activity",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStart"
+        )
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onResume")
+        Log.d(
+            "Activity",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onResume"
+        )
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onPause")
+        Log.d(
+            "Activity",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onPause"
+        )
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onStop")
+        Log.d(
+            "Activity",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStop"
+        )
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("Activity", "[${javaClass.simpleName}][${title ?: "UNDEFINE"}] onDestroy")
+        Log.d(
+            "Activity",
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onDestroy"
+        )
     }
 }

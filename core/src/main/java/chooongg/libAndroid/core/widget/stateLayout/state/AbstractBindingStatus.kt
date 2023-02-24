@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.viewbinding.ViewBinding
-import chooongg.libAndroid.basic.ext.getTClass
+import chooongg.libAndroid.basic.ext.getGenericsClass
 
 abstract class AbstractBindingStatus<BINDING : ViewBinding> : AbstractState() {
 
@@ -34,7 +34,7 @@ abstract class AbstractBindingStatus<BINDING : ViewBinding> : AbstractState() {
 
     @Suppress("UNCHECKED_CAST")
     fun <BINDING : ViewBinding> getBindingT(context: Context): BINDING {
-        val clazz = javaClass.getTClass(0) as Class<BINDING>
+        val clazz = javaClass.getGenericsClass(0) as Class<BINDING>
         val method = clazz.getMethod("inflate", LayoutInflater::class.java)
         return method.invoke(null, LayoutInflater.from(context)) as BINDING
     }
