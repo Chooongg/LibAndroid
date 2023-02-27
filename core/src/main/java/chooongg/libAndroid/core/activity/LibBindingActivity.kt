@@ -1,5 +1,6 @@
 package chooongg.libAndroid.core.activity
 
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.viewbinding.ViewBinding
 import chooongg.libAndroid.core.ext.getBindingT
@@ -14,8 +15,8 @@ abstract class LibBindingActivity<B : ViewBinding> : LibActivity() {
 
     override fun initLayout() = ResourcesCompat.ID_NULL
 
-    override fun onCreateContentView() {
-        setContentView(getBindingT<B>(getViewBindingTIndex()).apply { _binding = this }.root)
+    override fun getContentView(): View {
+        return getBindingT<B>(getViewBindingTIndex()).apply { _binding = this }.root
     }
 
     override fun onDestroy() {

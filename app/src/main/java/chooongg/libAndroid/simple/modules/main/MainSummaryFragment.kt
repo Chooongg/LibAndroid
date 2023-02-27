@@ -1,14 +1,14 @@
 package chooongg.libAndroid.simple.modules.main
 
 import android.os.Bundle
-import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.annotation.AppBarEnable
 import com.chooongg.libAndroid.databinding.FragmentMainSummaryBinding
-import com.google.android.material.appbar.AppBarLayout
 
-@Title("概述")
-class MainSummaryFragment : BaseMainFragment<FragmentMainSummaryBinding>(){
+@AppBarEnable
+class MainSummaryFragment : BaseMainFragment<FragmentMainSummaryBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
+        title = "概述"
     }
 
 }

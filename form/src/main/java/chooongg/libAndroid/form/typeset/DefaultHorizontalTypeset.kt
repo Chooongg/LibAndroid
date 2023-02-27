@@ -18,7 +18,6 @@ class DefaultHorizontalTypeset : FormTypeset(Gravity.CENTER_VERTICAL or Gravity.
                 it.setTextAppearanceAttr(com.google.android.material.R.attr.textAppearanceBodyMedium)
                 addView(it)
             }
-            parent.addView(this)
         }
     }
 

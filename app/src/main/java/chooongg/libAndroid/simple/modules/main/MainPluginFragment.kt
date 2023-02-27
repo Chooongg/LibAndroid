@@ -2,14 +2,14 @@ package chooongg.libAndroid.simple.modules.main
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
-import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.annotation.AppBarEnable
 import chooongg.libAndroid.core.fragment.LibBindingModelFragment
 import chooongg.libAndroid.form.FormAdapter
 import chooongg.libAndroid.form.item.FormText
 import chooongg.libAndroid.form.style.DefaultStyle
 import com.chooongg.libAndroid.databinding.FragmentMainPluginBinding
 
-@Title("插件")
+@AppBarEnable
 class MainPluginFragment :
     LibBindingModelFragment<FragmentMainPluginBinding, MainPluginFragment.PluginViewModel>() {
 
@@ -18,6 +18,7 @@ class MainPluginFragment :
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        title = "插件"
         model.formAdapter.bind(binding.recyclerView)
         model.formAdapter.addPart(DefaultStyle()) {
             createGroup {

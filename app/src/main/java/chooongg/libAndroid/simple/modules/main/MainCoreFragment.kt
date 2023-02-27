@@ -1,11 +1,13 @@
 package chooongg.libAndroid.simple.modules.main
 
-import chooongg.libAndroid.core.annotation.Title
-import chooongg.libAndroid.core.fragment.LibBindingFragment
+import android.os.Bundle
+import chooongg.libAndroid.core.annotation.AppBarEnable
 import com.chooongg.libAndroid.databinding.FragmentMainCoreBinding
 
-@Title("核心")
+@AppBarEnable
 class MainCoreFragment : BaseMainFragment<FragmentMainCoreBinding>() {
 
-
+    override fun initView(savedInstanceState: Bundle?) {
+        title = "核心"
+    }
 }

@@ -48,7 +48,7 @@ class FormPartAdapter(
     }).build())
 
 
-    val data: List<FormItem> = asyncDiffer.currentList
+    val data: List<FormItem> get() =  asyncDiffer.currentList
 
     fun submitList(creator: FormPartCreator) {
         adapterScope.cancel()

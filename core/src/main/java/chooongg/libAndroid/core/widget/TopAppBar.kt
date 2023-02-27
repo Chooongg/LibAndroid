@@ -7,8 +7,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.R
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.internal.ViewUtils
 
 @SuppressLint("RestrictedApi")
 class TopAppBar @JvmOverloads constructor(
@@ -23,15 +21,7 @@ class TopAppBar @JvmOverloads constructor(
     }
 
     init {
-        ViewUtils.doOnApplyWindowInsets(this){ view, insets, relativePadding ->
-            insets
-        }
-        ViewUtils.doOnApplyWindowInsets(
-            this, attrs, defStyleAttr, DEF_STYLE_RES
-        ) { view, insets, relativePadding ->
-
-            insets
-        }
+        applyWindowInsets()
     }
 
     private fun applyWindowInsets() {
@@ -43,8 +33,13 @@ class TopAppBar @JvmOverloads constructor(
         ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
             val inset =
                 insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-            v.minimumHeight = minHeight + inset.left
-
+            v.setPadding(
+                relativePaddingLeft + inset.left,
+                relativePaddingTop + inset.top,
+                relativePaddingRight + inset.right,
+                relativePaddingBottom + inset.bottom
+            )
+            v.minimumHeight = minHeight + inset.top
             insets
         }
     }

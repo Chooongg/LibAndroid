@@ -17,8 +17,8 @@ abstract class LibBindingFragment<B : ViewBinding> : LibFragment() {
 
     override fun initLayout() = ResourcesCompat.ID_NULL
 
-    override fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup?): View? {
-        return getBindingT<B>(getViewBindingTIndex(), inflater, container, false).also {
+    override fun getContentView(container: ViewGroup?): View? {
+        return getBindingT<B>(getViewBindingTIndex(), layoutInflater, container, false).also {
             _binding = it
         }.root
     }

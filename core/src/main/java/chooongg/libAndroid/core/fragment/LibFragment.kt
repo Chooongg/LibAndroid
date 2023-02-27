@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import chooongg.libAndroid.basic.ext.attrBoolean
 import chooongg.libAndroid.basic.ext.getLogcatPath
 import chooongg.libAndroid.basic.ext.resString
 import chooongg.libAndroid.core.activity.LibActivity
-import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.annotation.AppBarEnable
+import chooongg.libAndroid.core.appBar.AppBarProvider
+import chooongg.libAndroid.core.appBar.SmallTopAppBarProvider
 import chooongg.libAndroid.core.widget.TopAppBarLayout
 
 abstract class LibFragment : Fragment() {
@@ -26,18 +30,53 @@ abstract class LibFragment : Fragment() {
     val isShowing get() = !isHidden && isResumed
 
     open var title: CharSequence? = null
+        set(value) {
+            field = value
+            val toolbarId = getToolbarId() ?: return
+            val view = view ?: return
+            view.findViewById<Toolbar>(toolbarId).title = value
+        }
 
+    /**
+     * 获取AppBar布局提供器
+     */
+    protected open fun getAppBarProvider(): AppBarProvider = SmallTopAppBarProvider()
+
+    /**
+     * 初始化布局
+     */
     @LayoutRes
     protected abstract fun initLayout(): Int
 
+    /**
+     * 获取Toolbar的id
+     */
+    @IdRes
+    protected open fun getToolbarId(): Int? = null
+
+    /**
+     * 初始化视图
+     */
     protected open fun initView(savedInstanceState: Bundle?) {}
 
+    /**
+     * 初始化内容
+     */
     protected open fun initContent(savedInstanceState: Bundle?) {}
 
+    /**
+     * 惰性初始化内容
+     */
     protected open fun initContentByLazy() {}
 
+    /**
+     * 刷新时
+     */
     open fun onRefresh(any: Any? = null) {}
 
+    /**
+     * 再次选中时
+     */
     open fun onReselected() = Unit
 
     open fun getLiftOnScrollTargetId() = ResourcesCompat.ID_NULL
@@ -46,10 +85,7 @@ abstract class LibFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        onCreateTitle()
-        return onCreateContentView(inflater, container)
-    }
+    ): View? = createContentViewByLib(container)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,12 +95,9 @@ abstract class LibFragment : Fragment() {
         )
         initView(savedInstanceState)
         initContent(savedInstanceState)
-        if (libActivity?.supportActionBar == null) {
-            view.findViewWithTag<TopAppBarLayout>("Lib_TopAppBarLayout")?.let {
-                if (it.topAppBar.title == null) {
-                    it.topAppBar.title = title
-                }
-            }
+        val toolbarId = getToolbarId()
+        if (toolbarId != null){
+            view.findViewById<Toolbar>(toolbarId)?.title = title
         }
         Log.d(
             "Fragment",
@@ -72,15 +105,16 @@ abstract class LibFragment : Fragment() {
         )
     }
 
-    protected open fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup?): View? {
-        return inflater.inflate(initLayout(), container, false)
+    internal open fun getContentView(container: ViewGroup?): View? {
+        return layoutInflater.inflate(initLayout(), container, false)
     }
 
-    private fun onCreateTitle() {
-        if (title != null) return
-        if (javaClass.isAnnotationPresent(Title::class.java)) {
-            title = javaClass.getAnnotation(Title::class.java)!!.value
-        }
+    private fun createContentViewByLib(container: ViewGroup?): View? {
+        return if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)
+            && javaClass.getAnnotation(AppBarEnable::class.java)?.value == true
+        ) {
+            getAppBarProvider().createLayout(null, this, getContentView(container))
+        } else getContentView(container)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -143,10 +177,10 @@ abstract class LibFragment : Fragment() {
         }
 
     open fun setTitle(@StringRes resId: Int) = apply {
-        lifecycleScope.launchWhenCreated {
-            title = resString(resId)
-        }
+        title = resString(resId)
     }
+
+    private fun getToolbarByLib() = getToolbarId() ?: getAppBarProvider().getToolbarId()
 
     protected open fun onBackPressed() {}
 

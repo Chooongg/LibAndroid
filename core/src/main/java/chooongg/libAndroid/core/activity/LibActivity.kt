@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
@@ -14,8 +13,10 @@ import androidx.core.view.WindowCompat
 import chooongg.libAndroid.basic.ext.attrBoolean
 import chooongg.libAndroid.basic.ext.getLogcatPath
 import chooongg.libAndroid.core.annotation.ActivityTransitions
+import chooongg.libAndroid.core.annotation.AppBarEnable
 import chooongg.libAndroid.core.annotation.EdgeToEdge
-import chooongg.libAndroid.core.annotation.Title
+import chooongg.libAndroid.core.appBar.AppBarProvider
+import chooongg.libAndroid.core.appBar.SmallTopAppBarProvider
 import chooongg.libAndroid.core.ext.EXTRA_TRANSITION_NAME
 import chooongg.libAndroid.core.ext.TRANSITION_NAME_CONTAINER_TRANSFORM
 import com.google.android.material.motion.MotionUtils
@@ -30,22 +31,37 @@ abstract class LibActivity : AppCompatActivity() {
     inline val context: Context get() = this
     inline val activity: LibActivity get() = this
 
+    /**
+     * 获取AppBar布局提供器
+     */
+    protected open fun getAppBarProvider(): AppBarProvider = SmallTopAppBarProvider()
+
+    /**
+     * 初始化布局
+     */
     @LayoutRes
     protected abstract fun initLayout(): Int
 
+    /**
+     * 初始化视图
+     */
     protected open fun initView(savedInstanceState: Bundle?) {}
 
+    /**
+     * 初始化内容
+     */
     protected open fun initContent(savedInstanceState: Bundle?) {}
 
+    /**
+     * 刷新时
+     */
     open fun onRefresh(any: Any? = null) {}
 
     final override fun onCreate(savedInstanceState: Bundle?) {
-        onCreateTransitions()
+        createTransitions()
         super.onCreate(savedInstanceState)
-        onCreateTitle()
-        onCreateEdgeToEdge()
-        autoSetContentView()
-
+        createEdgeToEdge()
+        createContentViewByLib()
         initView(savedInstanceState)
         Log.d(
             "Activity",
@@ -58,7 +74,7 @@ abstract class LibActivity : AppCompatActivity() {
         initContent(savedInstanceState)
     }
 
-    protected open fun onCreateTransitions() {
+    protected open fun createTransitions() {
         if (javaClass.getAnnotation(ActivityTransitions::class.java)?.enable != true) return
         with(window) {
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
@@ -89,13 +105,7 @@ abstract class LibActivity : AppCompatActivity() {
         return transform
     }
 
-    private fun onCreateTitle() {
-        if (javaClass.isAnnotationPresent(Title::class.java)) {
-            title = javaClass.getAnnotation(Title::class.java)!!.value
-        }
-    }
-
-    private fun onCreateEdgeToEdge() {
+    private fun createEdgeToEdge() {
         if (attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) return
         javaClass.getAnnotation(EdgeToEdge::class.java)?.let {
             if (!it.isEdgeToEdge) return
@@ -104,41 +114,19 @@ abstract class LibActivity : AppCompatActivity() {
         }
     }
 
+    private fun createContentViewByLib() {
+        if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)
+            && javaClass.getAnnotation(AppBarEnable::class.java)?.value == true
+        ) {
+            setContentView(getAppBarProvider().createLayout(this, null, getContentView()))
+        } else setContentView(getContentView())
+    }
+
     /**
      * 自动创建内容视图
      */
-    protected open fun autoSetContentView() {
-        setContentView(initLayout())
-    }
-
-    /**
-     * 创建顶部栏
-     * @return Triple<总布局, 添加内容的父布局, 添加内容子项的位置>
-     */
-    protected open fun onCreateAppBarParent(): Triple<ViewGroup, ViewGroup, Int>? = null
-
-    override fun setContentView(layoutResID: Int) {
-        setContentView(layoutInflater.inflate(layoutResID, null))
-    }
-
-    override fun setContentView(view: View?) {
-        if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) {
-            val appBarParent = onCreateAppBarParent()
-            if (appBarParent != null) {
-                if (view != null) appBarParent.second.addView(view, appBarParent.third)
-                super.setContentView(appBarParent.first)
-            } else super.setContentView(view)
-        } else super.setContentView(view)
-    }
-
-    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)) {
-            val appBarParent = onCreateAppBarParent()
-            if (appBarParent != null) {
-                if (view != null) appBarParent.second.addView(view, appBarParent.third, params)
-                super.setContentView(appBarParent.first)
-            } else super.setContentView(view)
-        } else super.setContentView(view)
+    internal open fun getContentView(): View {
+        return layoutInflater.inflate(initLayout(), null)
     }
 
     override fun onStart() {
