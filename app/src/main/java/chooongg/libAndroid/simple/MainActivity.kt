@@ -3,12 +3,14 @@ package chooongg.libAndroid.simple
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import chooongg.libAndroid.core.activity.LibBindingModelActivity
+import chooongg.libAndroid.core.annotation.AppBarNavigationEnable
 import chooongg.libAndroid.core.widget.viewPager.FragmentAdapter
 import chooongg.libAndroid.simple.modules.main.*
 import com.chooongg.libAndroid.R
 import com.chooongg.libAndroid.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 
+@AppBarNavigationEnable(false)
 class MainActivity : LibBindingModelActivity<ActivityMainBinding, MainActivity.MainViewModel>() {
 
     class MainViewModel : ViewModel() {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/lib_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="chooongg.libAndroid.core.widget.behavior.AppBarLayoutBehavior">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/lib_collapsingToolbarLayout"
+            style="?attr/collapsingToolbarLayoutLargeStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="3">
+
+            <chooongg.libAndroid.core.widget.TopAppBar
+                android:id="@+id/lib_topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin"
+                tools:title="标题" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

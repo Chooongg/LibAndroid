@@ -21,7 +21,7 @@ class TopAppBar @JvmOverloads constructor(
     }
 
     init {
-        applyWindowInsets()
+//        applyWindowInsets()
     }
 
     private fun applyWindowInsets() {

@@ -35,9 +35,9 @@ class EventFlowCore : ViewModel() {
         isSticky: Boolean,
         onReceived: (T) -> Unit
     ): Job = lifecycleOwner.lifecycleScope.launch {
-        lifecycleOwner.lifecycle.whenStateAtLeast(minState) {
-            getEventFlow(eventName, isSticky).collect {
-                this.launch(dispatcher) {
+        lifecycleOwner.withStateAtLeast(minState) {
+            launch(dispatcher) {
+                getEventFlow(eventName, isSticky).collect {
                     invokeReceived(it, onReceived)
                 }
             }

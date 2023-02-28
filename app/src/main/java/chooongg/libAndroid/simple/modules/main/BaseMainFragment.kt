@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.viewbinding.ViewBinding
 import chooongg.libAndroid.core.fragment.LibBindingFragment
-import chooongg.libAndroid.core.widget.TopAppBarLayout
-import com.chooongg.libAndroid.R
 import com.google.android.material.appbar.AppBarLayout
 
 abstract class BaseMainFragment<B : ViewBinding> : LibBindingFragment<B>(),

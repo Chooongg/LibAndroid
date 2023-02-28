@@ -4,19 +4,26 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import chooongg.libAndroid.basic.ext.BasicLog
 import chooongg.libAndroid.basic.ext.attrBoolean
 import chooongg.libAndroid.basic.ext.getLogcatPath
+import chooongg.libAndroid.core.R
 import chooongg.libAndroid.core.annotation.ActivityTransitions
 import chooongg.libAndroid.core.annotation.AppBarEnable
+import chooongg.libAndroid.core.annotation.AppBarNavigationEnable
 import chooongg.libAndroid.core.annotation.EdgeToEdge
-import chooongg.libAndroid.core.appBar.AppBarProvider
-import chooongg.libAndroid.core.appBar.SmallTopAppBarProvider
+import chooongg.libAndroid.core.appBar.AppBarDelegate
+import chooongg.libAndroid.core.appBar.TopSmallAppBarDelegate
 import chooongg.libAndroid.core.ext.EXTRA_TRANSITION_NAME
 import chooongg.libAndroid.core.ext.TRANSITION_NAME_CONTAINER_TRANSFORM
 import com.google.android.material.motion.MotionUtils
@@ -26,7 +33,7 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 @EdgeToEdge(true)
-abstract class LibActivity : AppCompatActivity() {
+abstract class LibActivity : AppCompatActivity(), LifecycleEventObserver {
 
     inline val context: Context get() = this
     inline val activity: LibActivity get() = this
@@ -34,7 +41,7 @@ abstract class LibActivity : AppCompatActivity() {
     /**
      * 获取AppBar布局提供器
      */
-    protected open fun getAppBarProvider(): AppBarProvider = SmallTopAppBarProvider()
+    protected open fun getAppBarDelegate(): AppBarDelegate = TopSmallAppBarDelegate()
 
     /**
      * 初始化布局
@@ -60,13 +67,10 @@ abstract class LibActivity : AppCompatActivity() {
     final override fun onCreate(savedInstanceState: Bundle?) {
         createTransitions()
         super.onCreate(savedInstanceState)
+        if (BasicLog.isEnable) lifecycle.addObserver(this)
         createEdgeToEdge()
         createContentViewByLib()
         initView(savedInstanceState)
-        Log.d(
-            "Activity",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onCreateView"
-        )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -111,15 +115,30 @@ abstract class LibActivity : AppCompatActivity() {
             if (!it.isEdgeToEdge) return
             WindowCompat.setDecorFitsSystemWindows(window, false)
             window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
         }
     }
 
     private fun createContentViewByLib() {
         if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)
             && javaClass.getAnnotation(AppBarEnable::class.java)?.value == true
-        ) {
-            setContentView(getAppBarProvider().createLayout(this, null, getContentView()))
-        } else setContentView(getContentView())
+        ) setContentView(getAppBarDelegate().createLayout(this, null, null, getContentView()))
+        else setContentView(getContentView())
+        if (javaClass.getAnnotation(AppBarNavigationEnable::class.java)?.value != false) {
+            supportActionBar?.also {
+                it.setHomeButtonEnabled(true)
+                it.setDisplayHomeAsUpEnabled(true)
+                it.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val result = super.onOptionsItemSelected(item)
+        return if (!result && item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
+        } else result
     }
 
     /**
@@ -129,43 +148,15 @@ abstract class LibActivity : AppCompatActivity() {
         return layoutInflater.inflate(initLayout(), null)
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(
-            "Activity",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStart"
-        )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(
-            "Activity",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onResume"
-        )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(
-            "Activity",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onPause"
-        )
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(
-            "Activity",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStop"
-        )
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+        lifecycle.removeObserver(this)
+    }
+
+    final override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         Log.d(
             "Activity",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onDestroy"
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} ${event.name}"
         )
     }
 }

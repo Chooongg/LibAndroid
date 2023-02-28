@@ -6,10 +6,9 @@
         <item name="android:actionBarSize">@dimen/lib_action_bar_size</item>
         <item name="actionBarSize">@dimen/lib_action_bar_size</item>
         <item name="android:colorBackground">?colorSurface</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?colorSurface</item>
         <item name="android:actionBarStyle">?toolbarStyle</item>
-
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="snackbarStyle">@style/Widget.LibAndroid.Snackbar</item>
         <item name="materialDividerHeavyStyle">@style/Widget.LibAndroid.MaterialDivider.Heavy</item>
         <item name="materialAlertDialogTheme">
@@ -21,6 +20,7 @@
 
     <style name="Theme.LibAndroid.Surface" parent="Base.Theme.LibAndroid">
         <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:actionBarStyle">@style/Widget.LibAndroid.TopAppBar.Surface</item>
         <item name="appBarLayoutStyle">@style/Widget.LibAndroid.AppBarLayout.Surface</item>
@@ -33,6 +33,7 @@
 
     <style name="Theme.LibAndroid.Primary" parent="Base.Theme.LibAndroid">
         <item name="android:statusBarColor">?colorPrimary</item>
+        <item name="android:navigationBarColor">?colorPrimary</item>
         <item name="android:actionBarStyle">@style/Widget.LibAndroid.TopAppBar.Primary</item>
         <item name="appBarLayoutStyle">@style/Widget.LibAndroid.AppBarLayout.Primary</item>
         <item name="collapsingToolbarLayoutStyle">

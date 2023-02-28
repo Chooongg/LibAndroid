@@ -12,16 +12,21 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import chooongg.libAndroid.basic.ext.BasicLog
 import chooongg.libAndroid.basic.ext.attrBoolean
 import chooongg.libAndroid.basic.ext.getLogcatPath
 import chooongg.libAndroid.basic.ext.resString
+import chooongg.libAndroid.core.R
 import chooongg.libAndroid.core.activity.LibActivity
 import chooongg.libAndroid.core.annotation.AppBarEnable
-import chooongg.libAndroid.core.appBar.AppBarProvider
-import chooongg.libAndroid.core.appBar.SmallTopAppBarProvider
-import chooongg.libAndroid.core.widget.TopAppBarLayout
+import chooongg.libAndroid.core.annotation.AppBarNavigationEnable
+import chooongg.libAndroid.core.appBar.AppBarDelegate
+import chooongg.libAndroid.core.appBar.TopSmallAppBarDelegate
 
-abstract class LibFragment : Fragment() {
+abstract class LibFragment : Fragment(), LifecycleEventObserver {
 
     val fragment get() = this
     val libActivity get() = activity as? LibActivity
@@ -40,7 +45,7 @@ abstract class LibFragment : Fragment() {
     /**
      * 获取AppBar布局提供器
      */
-    protected open fun getAppBarProvider(): AppBarProvider = SmallTopAppBarProvider()
+    protected open fun getAppBarDelegate(): AppBarDelegate = TopSmallAppBarDelegate()
 
     /**
      * 初始化布局
@@ -52,7 +57,7 @@ abstract class LibFragment : Fragment() {
      * 获取Toolbar的id
      */
     @IdRes
-    protected open fun getToolbarId(): Int? = null
+    protected open fun getToolbarId(): Int? = getAppBarDelegate().getToolbarId()
 
     /**
      * 初始化视图
@@ -85,7 +90,10 @@ abstract class LibFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = createContentViewByLib(container)
+    ): View? {
+        if (BasicLog.isEnable) lifecycle.addObserver(this)
+        return createContentViewByLib(container)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -95,14 +103,7 @@ abstract class LibFragment : Fragment() {
         )
         initView(savedInstanceState)
         initContent(savedInstanceState)
-        val toolbarId = getToolbarId()
-        if (toolbarId != null){
-            view.findViewById<Toolbar>(toolbarId)?.title = title
-        }
-        Log.d(
-            "Fragment",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onCreateView"
-        )
+        getToolbarId()?.also { view.findViewById<Toolbar>(it)?.title = title }
     }
 
     internal open fun getContentView(container: ViewGroup?): View? {
@@ -110,11 +111,34 @@ abstract class LibFragment : Fragment() {
     }
 
     private fun createContentViewByLib(container: ViewGroup?): View? {
-        return if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)
+        val view = if (!attrBoolean(androidx.appcompat.R.attr.windowActionBar, false)
             && javaClass.getAnnotation(AppBarEnable::class.java)?.value == true
-        ) {
-            getAppBarProvider().createLayout(null, this, getContentView(container))
-        } else getContentView(container)
+        ) getAppBarDelegate().createLayout(null, this, container, getContentView(container))
+        else getContentView(container)
+        val toolbarId = getToolbarId() ?: return view
+        if (javaClass.isAnnotationPresent(AppBarNavigationEnable::class.java)) {
+            if (javaClass.getAnnotation(AppBarNavigationEnable::class.java)!!.value) {
+                view?.findViewById<Toolbar>(toolbarId)?.also {
+                    it.setNavigationIcon(R.drawable.ic_arrow_back)
+                    it.setNavigationOnClickListener {
+                        if (onBackPressedCallback.isEnabled) {
+                            onBackPressed()
+                        } else activity?.onBackPressedDispatcher?.onBackPressed()
+                    }
+                }
+            }
+        } else if (activity?.javaClass?.getAnnotation(AppBarNavigationEnable::class.java)?.value != false) {
+            view?.findViewById<Toolbar>(toolbarId)?.also {
+                it.setNavigationIcon(R.drawable.ic_arrow_back)
+                it.setNavigationOnClickListener {
+                    if (onBackPressedCallback.isEnabled) {
+                        onBackPressed()
+                    } else activity?.onBackPressedDispatcher?.onBackPressed()
+                }
+            }
+        }
+
+        return view
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -125,14 +149,6 @@ abstract class LibFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(
-            "Fragment",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStart"
-        )
-    }
-
     override fun onResume() {
         super.onResume()
         if (!isLoaded && !isHidden) {
@@ -140,27 +156,11 @@ abstract class LibFragment : Fragment() {
             initContentByLazy()
         }
         onBackPressedCallback.isEnabled = onBackPressedInterceptEnable
-        Log.d(
-            "Fragment",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onResume"
-        )
     }
 
     override fun onPause() {
         super.onPause()
         onBackPressedCallback.isEnabled = false
-        Log.d(
-            "Fragment",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onPause"
-        )
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(
-            "Fragment",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onStop"
-        )
     }
 
     var onBackPressedInterceptEnable = false
@@ -180,15 +180,17 @@ abstract class LibFragment : Fragment() {
         title = resString(resId)
     }
 
-    private fun getToolbarByLib() = getToolbarId() ?: getAppBarProvider().getToolbarId()
-
     protected open fun onBackPressed() {}
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycle.removeObserver(this)
+    }
+
+    final override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         Log.d(
             "Fragment",
-            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} onDestroyView"
+            "${javaClass.getLogcatPath()}${if (title.isNullOrEmpty()) "" else " $title"} ${event.name}"
         )
     }
 }

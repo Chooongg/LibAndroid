@@ -100,9 +100,5 @@ fun logWTFClass(tag: String, clazz: Class<*>, msg: Any?, e: Throwable? = null) {
 }
 
 object BasicLog {
-    internal var isEnable = isAppDebug()
-
-    fun setEnable(enable: Boolean) {
-        isEnable = enable
-    }
+    var isEnable = isAppDebug()
 }
