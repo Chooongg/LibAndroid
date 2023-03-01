@@ -15,11 +15,6 @@ class TopAppBar @JvmOverloads constructor(
     defStyleAttr: Int = androidx.appcompat.R.attr.toolbarStyle
 ) : MaterialToolbar(context, attrs, defStyleAttr) {
 
-    companion object {
-        @JvmStatic
-        private val DEF_STYLE_RES: Int = R.style.Widget_Material3_Toolbar
-    }
-
     init {
 //        applyWindowInsets()
     }

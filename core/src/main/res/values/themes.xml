@@ -16,6 +16,8 @@
         </item>
 
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
+        </item>
     </style>
 
     <style name="Theme.LibAndroid.Surface" parent="Base.Theme.LibAndroid">
